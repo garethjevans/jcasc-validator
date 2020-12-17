@@ -3,8 +3,8 @@ NAME := validator
 BINARY_NAME := jcasc-validator
 GO := GO111MODULE=on GO15VENDOREXPERIMENT=1 go
 GO_NOMOD := GO111MODULE=off go
-PACKAGE_NAME := github.com/garethjevans/jscac-validator
-ROOT_PACKAGE := github.com/garethjevans/jscac-validator
+PACKAGE_NAME := github.com/garethjevans/jcasc-validator
+ROOT_PACKAGE := github.com/garethjevans/jcasc-validator
 ORG := garethjevans
 
 # set dev version unless VERSION is explicitly set via environment

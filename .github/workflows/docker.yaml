@@ -8,13 +8,13 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out source code
+        uses: actions/checkout@v2
+
       - name: Set up Go 1.15
         uses: actions/setup-go@v2
         with:
           go-version: 1.15
-
-      - name: Check out source code
-        uses: actions/checkout@v2
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -35,11 +35,9 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: garethjevans/jcasc-validator:latest
-          build-args: |
-            arg1=value1
-            arg2=value2
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

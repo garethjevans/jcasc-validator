@@ -75,7 +75,7 @@ func (fe FlagError) Unwrap() error {
 
 // RootCmd is the entry point of command-line execution.
 var RootCmd = &cobra.Command{
-	Use:   "jscac-validator",
+	Use:   "jcasc-validator",
 	Short: "JCasc Validator",
 	Long:  `A tool to validate the configmaps generated for JCasc.`,
 
