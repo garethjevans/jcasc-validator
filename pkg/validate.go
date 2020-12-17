@@ -84,8 +84,6 @@ func (c *ValidateCmd) Run() error {
 
 	logrus.Debugf("created temp dir %s", tmpDir)
 
-	configMaps := v1.ConfigMap{}
-
 	yamlFile, err := ioutil.ReadFile(file)
 	if err != nil {
 		return err
@@ -94,31 +92,9 @@ func (c *ValidateCmd) Run() error {
 	schemaLoader := gojsonschema.NewReferenceLoader(schemaURL(c.SchemaLocation, c.JenkinsLocation))
 	logrus.Debugf("using schema %s", schemaLoader)
 
-	filesToProcess := []string{}
-
-	dec := yaml.NewDecoder(strings.NewReader(string(yamlFile)))
-	for dec.Decode(&configMaps) == nil {
-		for k, v := range configMaps.Data {
-			if !contains(filesToProcess, k) {
-				yamlFile := path.Join(tmpDir, k)
-				err = ioutil.WriteFile(yamlFile, []byte(v), 0600)
-				if err != nil {
-					return err
-				}
-
-				json, err := ghodss.YAMLToJSON([]byte(v))
-				if err != nil {
-					return err
-				}
-
-				jsonFile := yamlFile + ".json"
-				err = ioutil.WriteFile(jsonFile, json, 0600)
-				if err != nil {
-					return err
-				}
-				filesToProcess = append(filesToProcess, k)
-			}
-		}
+	filesToProcess, err := writeConfigMapsToTempDir(yamlFile, tmpDir)
+	if err != nil {
+		return err
 	}
 
 	for _, f := range filesToProcess {
@@ -145,6 +121,36 @@ func (c *ValidateCmd) Run() error {
 		}
 	}
 	return nil
+}
+
+func writeConfigMapsToTempDir(yamlFile []byte, tmpDir string) ([]string, error) {
+	configMaps := v1.ConfigMap{}
+	dec := yaml.NewDecoder(strings.NewReader(string(yamlFile)))
+	filesToProcess := []string{}
+	for dec.Decode(&configMaps) == nil {
+		for k, v := range configMaps.Data {
+			if !contains(filesToProcess, k) {
+				yamlFile := path.Join(tmpDir, k)
+				err := ioutil.WriteFile(yamlFile, []byte(v), 0600)
+				if err != nil {
+					return nil, err
+				}
+
+				json, err := ghodss.YAMLToJSON([]byte(v))
+				if err != nil {
+					return nil, err
+				}
+
+				jsonFile := yamlFile + ".json"
+				err = ioutil.WriteFile(jsonFile, json, 0600)
+				if err != nil {
+					return nil, err
+				}
+				filesToProcess = append(filesToProcess, k)
+			}
+		}
+	}
+	return filesToProcess, nil
 }
 
 func contains(s []string, e string) bool {
