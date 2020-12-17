@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/garethjevans/jcasc-validator/pkg"
-	"github.com/prometheus/common/version"
 	"os"
 	"runtime/debug"
 	"strings"
+
+	"github.com/garethjevans/jcasc-validator/pkg"
+	"github.com/prometheus/common/version"
 
 	"github.com/spf13/cobra/doc"
 

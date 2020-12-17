@@ -2,24 +2,25 @@ package pkg
 
 import (
 	"errors"
+	"io/ioutil"
+	"os"
+	"path"
+	"strings"
+
 	ghodss "github.com/ghodss/yaml"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/xeipuuv/gojsonschema"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	v1 "k8s.io/api/core/v1"
-	"os"
-	"path"
-	"strings"
 )
 
 // ValidateCmd defines parent get.
 type ValidateCmd struct {
-	Cmd  *cobra.Command
-	Args []string
-	JenkinsLocation string
-	SchemaLocation string
+	Cmd              *cobra.Command
+	Args             []string
+	JenkinsLocation  string
+	SchemaLocation   string
 	TemplateLocation string
 }
 
@@ -63,7 +64,7 @@ func (c *ValidateCmd) Validate() error {
 		return errors.New("either --schema-location or --jenkins-location must be set")
 	}
 
-return nil
+	return nil
 }
 
 // Run
@@ -121,7 +122,7 @@ func (c *ValidateCmd) Run() error {
 	}
 
 	for _, f := range filesToProcess {
-		jsonFile := path.Join(tmpDir, f + ".json")
+		jsonFile := path.Join(tmpDir, f+".json")
 		yamlFile := path.Join(tmpDir, f)
 
 		documentLoader := gojsonschema.NewReferenceLoader("file://" + jsonFile)
@@ -143,7 +144,7 @@ func (c *ValidateCmd) Run() error {
 			logrus.Infof("\n%s", string(yamlContents))
 		}
 	}
-return nil
+	return nil
 }
 
 func contains(s []string, e string) bool {
@@ -162,4 +163,3 @@ func schemaUrl(schemaLocation string, jenkinsLocation string) string {
 
 	return jenkinsLocation + "/configuration-as-code/schema"
 }
-

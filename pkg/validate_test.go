@@ -1,9 +1,10 @@
 package pkg_test
 
 import (
+	"testing"
+
 	"github.com/garethjevans/jcasc-validator/pkg"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestValidateCmd_Validate_NoArgs(t *testing.T) {
@@ -21,14 +22,14 @@ func TestValidateCmd_Validate_Template(t *testing.T) {
 func TestValidateCmd_Validate_SchemaAndTemplate(t *testing.T) {
 	cmd := pkg.ValidateCmd{
 		TemplateLocation: "path.yaml",
-		SchemaLocation: "schema.json",
+		SchemaLocation:   "schema.json",
 	}
 	assert.NoError(t, cmd.Validate())
 }
 
 func TestValidateCmd_Validate_JenkinsArgsAndTemplate(t *testing.T) {
 	cmd := pkg.ValidateCmd{
-		JenkinsLocation: "http://localhost",
+		JenkinsLocation:  "http://localhost",
 		TemplateLocation: "path.yaml",
 	}
 	assert.NoError(t, cmd.Validate())
