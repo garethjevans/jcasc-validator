@@ -40,18 +40,18 @@ build: $(GO_DEPENDENCIES)
 
 linux: $(GO_DEPENDENCIES)
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/linux/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
-	chmod +x build/linux/$(NAME)
+	chmod +x build/linux/$(BINARY_NAME)
 
 arm: $(GO_DEPENDENCIES)
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=arm $(GO) build $(BUILDFLAGS) -o build/arm/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
-	chmod +x build/arm/$(NAME)
+	chmod +x build/arm/$(BINARY_NAME)
 
 win: $(GO_DEPENDENCIES)
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=windows GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/win/$(BINARY_NAME)-windows-amd64.exe cmd/$(NAME)/$(NAME).go
 
 darwin: $(GO_DEPENDENCIES)
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=darwin GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/darwin/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
-	chmod +x build/darwin/$(NAME)
+	chmod +x build/darwin/$(BINARY_NAME)
 
 deploy-local: build
 	mkdir -p ~/bin
