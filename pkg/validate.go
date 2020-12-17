@@ -54,7 +54,7 @@ func NewValidateCmd() *cobra.Command {
 	return cmd
 }
 
-// Validate
+// Validate.
 func (c *ValidateCmd) Validate() error {
 	if c.TemplateLocation == "" {
 		return errors.New("--template-location must be set")
@@ -67,7 +67,7 @@ func (c *ValidateCmd) Validate() error {
 	return nil
 }
 
-// Run
+// Run.
 func (c *ValidateCmd) Run() error {
 	err := c.Validate()
 	if err != nil {
@@ -91,7 +91,7 @@ func (c *ValidateCmd) Run() error {
 		return err
 	}
 
-	schemaLoader := gojsonschema.NewReferenceLoader(schemaUrl(c.SchemaLocation, c.JenkinsLocation))
+	schemaLoader := gojsonschema.NewReferenceLoader(schemaURL(c.SchemaLocation, c.JenkinsLocation))
 	logrus.Debugf("using schema %s", schemaLoader)
 
 	filesToProcess := []string{}
@@ -101,7 +101,7 @@ func (c *ValidateCmd) Run() error {
 		for k, v := range configMaps.Data {
 			if !contains(filesToProcess, k) {
 				yamlFile := path.Join(tmpDir, k)
-				err = ioutil.WriteFile(yamlFile, []byte(v), 0644)
+				err = ioutil.WriteFile(yamlFile, []byte(v), 0600)
 				if err != nil {
 					return err
 				}
@@ -112,7 +112,7 @@ func (c *ValidateCmd) Run() error {
 				}
 
 				jsonFile := yamlFile + ".json"
-				err = ioutil.WriteFile(jsonFile, json, 0644)
+				err = ioutil.WriteFile(jsonFile, json, 0600)
 				if err != nil {
 					return err
 				}
@@ -156,7 +156,7 @@ func contains(s []string, e string) bool {
 	return false
 }
 
-func schemaUrl(schemaLocation string, jenkinsLocation string) string {
+func schemaURL(schemaLocation string, jenkinsLocation string) string {
 	if schemaLocation != "" {
 		return "file://" + schemaLocation
 	}

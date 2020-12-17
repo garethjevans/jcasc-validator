@@ -39,18 +39,18 @@ build: $(GO_DEPENDENCIES)
 	CGO_ENABLED=$(CGO_ENABLED) $(GO) build $(BUILDTAGS) $(BUILDFLAGS) -o build/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
 
 linux: $(GO_DEPENDENCIES)
-	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/linux/$(NAME) cmd/$(NAME)/$(NAME).go
+	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/linux/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
 	chmod +x build/linux/$(NAME)
 
 arm: $(GO_DEPENDENCIES)
-	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=arm $(GO) build $(BUILDFLAGS) -o build/arm/$(NAME) cmd/$(NAME)/$(NAME).go
+	CGO_ENABLED=$(CGO_ENABLED) GOOS=linux GOARCH=arm $(GO) build $(BUILDFLAGS) -o build/arm/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
 	chmod +x build/arm/$(NAME)
 
 win: $(GO_DEPENDENCIES)
-	CGO_ENABLED=$(CGO_ENABLED) GOOS=windows GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/win/$(NAME)-windows-amd64.exe cmd/$(NAME)/$(NAME).go
+	CGO_ENABLED=$(CGO_ENABLED) GOOS=windows GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/win/$(BINARY_NAME)-windows-amd64.exe cmd/$(NAME)/$(NAME).go
 
 darwin: $(GO_DEPENDENCIES)
-	CGO_ENABLED=$(CGO_ENABLED) GOOS=darwin GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/darwin/$(NAME) cmd/$(NAME)/$(NAME).go
+	CGO_ENABLED=$(CGO_ENABLED) GOOS=darwin GOARCH=amd64 $(GO) build $(BUILDFLAGS) -o build/darwin/$(BINARY_NAME) cmd/$(NAME)/$(NAME).go
 	chmod +x build/darwin/$(NAME)
 
 deploy-local: build
