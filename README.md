@@ -28,3 +28,9 @@ The JCASC config will be in the following location:
 generated/<CHART_NAME>/charts/jenkins/templates/jcasc-config.yaml
 ```
 
+To run this against a running Jenkins Server, you can use:
+
+```
+./build/jcasc-validator --jenkins-location http://my.jenkins.com --template-location ...
+```
+

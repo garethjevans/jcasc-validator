@@ -135,7 +135,7 @@ func (c *ValidateCmd) Run() error {
 		if !result.Valid() {
 			logrus.Errorf("The file %s is not valid. see errors :", f)
 			for _, desc := range result.Errors() {
-				logrus.Warnf("- %s", desc)
+				logrus.Warnf(" - %s", desc.String())
 			}
 			yamlContents, err := ioutil.ReadFile(yamlFile)
 			if err != nil {
