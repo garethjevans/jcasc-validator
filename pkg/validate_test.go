@@ -29,8 +29,6 @@ func TestValidateCmd_Validate_SchemaAndTemplate(t *testing.T) {
 func TestValidateCmd_Validate_JenkinsArgsAndTemplate(t *testing.T) {
 	cmd := pkg.ValidateCmd{
 		JenkinsLocation: "http://localhost",
-		JenkinsUsername: "user",
-		JenkinsPassword: "pass",
 		TemplateLocation: "path.yaml",
 	}
 	assert.NoError(t, cmd.Validate())

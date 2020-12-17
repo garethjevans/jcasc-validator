@@ -19,8 +19,6 @@ type ValidateCmd struct {
 	Cmd  *cobra.Command
 	Args []string
 	JenkinsLocation string
-	JenkinsUsername string
-	JenkinsPassword string
 	SchemaLocation string
 	TemplateLocation string
 }
@@ -45,12 +43,6 @@ func NewValidateCmd() *cobra.Command {
 
 	cmd.Flags().StringVarP(&c.JenkinsLocation, "jenkins-location", "j", "",
 		"Location of the Jenkins server")
-
-	cmd.Flags().StringVarP(&c.JenkinsUsername, "jenkins-username", "u", "",
-		"Username to login to Jenkins")
-
-	cmd.Flags().StringVarP(&c.JenkinsPassword, "jenkins-password", "p", "",
-		"Password to login to Jenkins")
 
 	cmd.Flags().StringVarP(&c.SchemaLocation, "schema-location", "s", "",
 		"Path to the schema")
@@ -98,7 +90,7 @@ func (c *ValidateCmd) Run() error {
 		return err
 	}
 
-	schemaLoader := gojsonschema.NewReferenceLoader("file://" + c.SchemaLocation)
+	schemaLoader := gojsonschema.NewReferenceLoader(schemaUrl(c.SchemaLocation, c.JenkinsLocation))
 	logrus.Debugf("using schema %s", schemaLoader)
 
 	filesToProcess := []string{}
@@ -161,5 +153,13 @@ func contains(s []string, e string) bool {
 		}
 	}
 	return false
+}
+
+func schemaUrl(schemaLocation string, jenkinsLocation string) string {
+	if schemaLocation != "" {
+		return "file://" + schemaLocation
+	}
+
+	return jenkinsLocation + "/configuration-as-code/schema"
 }
 
