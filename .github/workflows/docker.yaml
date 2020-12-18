@@ -61,7 +61,6 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.prep.outputs.tags }}
-          repository: garethjevans/jcasc-validator
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
