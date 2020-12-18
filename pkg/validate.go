@@ -21,7 +21,7 @@ type ValidateCmd struct {
 	Args             []string
 	JenkinsLocation  string
 	SchemaLocation   string
-	SoftFail bool
+	SoftFail         bool
 	TemplateLocation string
 }
 

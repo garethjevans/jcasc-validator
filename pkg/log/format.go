@@ -2,9 +2,10 @@ package log
 
 import (
 	"bytes"
+	"strings"
+
 	"github.com/fatih/color"
 	"github.com/sirupsen/logrus"
-	"strings"
 )
 
 var (
@@ -21,14 +22,14 @@ var (
 	colorError = color.New(color.FgRed).SprintFunc()
 )
 
-// TextFormat lets use a custom text format
+// TextFormat lets use a custom text format.
 type TextFormat struct {
 	ShowInfoLevel   bool
 	ShowTimestamp   bool
 	TimestampFormat string
 }
 
-// NewTextFormat creates the default text formatter
+// NewTextFormat creates the default text formatter.
 func NewTextFormat() *TextFormat {
 	return &TextFormat{
 		ShowInfoLevel:   false,
@@ -37,7 +38,7 @@ func NewTextFormat() *TextFormat {
 	}
 }
 
-// Format formats the log statement
+// Format formats the log statement.
 func (f *TextFormat) Format(entry *logrus.Entry) ([]byte, error) {
 	var b *bytes.Buffer
 

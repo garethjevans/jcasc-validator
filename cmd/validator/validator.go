@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/garethjevans/jcasc-validator/pkg/log"
-	"github.com/sirupsen/logrus"
 	"os"
 	"runtime/debug"
 	"strings"
+
+	"github.com/garethjevans/jcasc-validator/pkg/log"
+	"github.com/sirupsen/logrus"
 
 	"github.com/garethjevans/jcasc-validator/pkg"
 	"github.com/prometheus/common/version"
