@@ -118,7 +118,7 @@ func (c *ValidateCmd) Run() error {
 				return err
 			}
 			logrus.Infof("\n%s", string(yamlContents))
-			return errors.New("Validation Failed")
+			return errors.New("validation failed")
 		}
 	}
 	return nil
