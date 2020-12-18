@@ -2,7 +2,8 @@ name: docker
 
 on:
   push:
-    branches: main
+    tags:
+      - '*'
 
 jobs:
   main:
@@ -37,7 +38,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: garethjevans/jcasc-validator:latest
+          tag_with_ref: true
+          repository: garethjevans/jcasc-validator
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
