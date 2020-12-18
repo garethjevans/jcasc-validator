@@ -6,6 +6,9 @@ import (
 	"runtime/debug"
 	"strings"
 
+	"github.com/garethjevans/jcasc-validator/pkg/log"
+	"github.com/sirupsen/logrus"
+
 	"github.com/garethjevans/jcasc-validator/pkg"
 	"github.com/prometheus/common/version"
 
@@ -24,6 +27,8 @@ var BuildDate = version.BuildDate
 var versionOutput = ""
 
 func init() {
+	logrus.SetFormatter(log.NewTextFormat())
+
 	if strings.Contains(Version, "dev") {
 		if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "(devel)" {
 			Version = info.Main.Version

@@ -21,6 +21,7 @@ type ValidateCmd struct {
 	Args             []string
 	JenkinsLocation  string
 	SchemaLocation   string
+	SoftFail         bool
 	TemplateLocation string
 }
 
@@ -50,6 +51,9 @@ func NewValidateCmd() *cobra.Command {
 
 	cmd.Flags().StringVarP(&c.TemplateLocation, "template-location", "t", "",
 		"Path to the generated jcasc-config.yaml")
+
+	cmd.Flags().BoolVarP(&c.SoftFail, "soft-fail", "", false,
+		"Only display errors, do not fail")
 
 	return cmd
 }
@@ -97,6 +101,7 @@ func (c *ValidateCmd) Run() error {
 		return err
 	}
 
+	valid := true
 	for _, f := range filesToProcess {
 		jsonFile := path.Join(tmpDir, f+".json")
 		yamlFile := path.Join(tmpDir, f)
@@ -109,6 +114,7 @@ func (c *ValidateCmd) Run() error {
 		}
 
 		if !result.Valid() {
+			valid = false
 			logrus.Errorf("The file %s is not valid. see errors :", f)
 			for _, desc := range result.Errors() {
 				logrus.Warnf(" - %s", desc.String())
@@ -118,6 +124,13 @@ func (c *ValidateCmd) Run() error {
 				return err
 			}
 			logrus.Infof("\n%s", string(yamlContents))
+		}
+	}
+
+	if !valid {
+		logrus.Errorf("file %s is invalid", c.TemplateLocation)
+		if !c.SoftFail {
+			os.Exit(1)
 		}
 	}
 	return nil
