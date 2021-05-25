@@ -3,7 +3,7 @@ module github.com/garethjevans/jcasc-validator
 go 1.15
 
 require (
-	github.com/fatih/color v1.10.0
+	github.com/fatih/color v1.11.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/prometheus/common v0.23.0
 	github.com/sirupsen/logrus v1.8.1
