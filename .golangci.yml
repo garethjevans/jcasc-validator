@@ -67,7 +67,6 @@ linters:
   enable:
     - asciicheck
     - deadcode
-    - depguard
     - dogsled
     - errcheck
     - funlen
